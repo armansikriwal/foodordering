@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% load static %}
+<div class="row mx-auto mt-4">
+{% for product in products %}
+      <div class="card mx-auto mb-4" style="width: 22rem;">
+  <img src="{{product.image.url}}" class="card-img-top" alt="..." width="250" height="300" >
+  <div class="card-body ">
+    <h5 class="card-title">{{product.name}}</h5>
+    <h6 class="card-title">{{product.price}}</h6>
+    <p class="card-text">
+    {{product.description}} <br>
+    {{product.category}}
+    </p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
+    {% endfor %}
+</div>
+
+
+{% endblock body %}
+
+
+
+
