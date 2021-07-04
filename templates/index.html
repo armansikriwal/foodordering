@@ -2,6 +2,24 @@
 
 {% block body %}
 {% load static %}
+<div class="container-fluid mt-3">
+<div class="row">
+
+<!--filter-->
+<div class="col-lg-3 mx-auto">
+  <a class="list-group-item list-group-item-action " href="/">All Products</a>
+  {% for category in categorys %}
+  <div class="list-group">
+    <a class="list-group-item list-group-item-action " href="/?category={{category.id}}">{{category.name}}</a>
+    
+  </div>
+  {% endfor %}
+  
+
+</div>
+
+<!--all products-->
+<div id="product" class="col-lg-9 mx-auto">
 <div class="row mx-auto mt-4">
 {% for product in products %}
       <div class="card mx-auto mb-4" style="width: 22rem;">
@@ -18,6 +36,10 @@
 </div>
 
     {% endfor %}
+</div>
+</div>
+</div>
+
 </div>
 
 

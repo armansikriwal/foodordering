@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block body %}
+{% if message %}
+<div class="alert alert-warning alert-dismissible fade show  text-center" role="alert">
+  <strong> {% for message in messages %}
+  {{message}}
+  {% endfor %}</strong> 
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Sign In</h5>
+            <form   action ="login"  method="POST">
+            {% csrf_token %}
+              <div class="form-label-group">
+                <input type="text" id="inputusername" class="form-control" name="username" placeholder="username" required autofocus>
+                <label for="inputEmail">username</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+                <label for="inputPassword">Password</label>
+              </div>
+
+              <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Remember password</label>
+              </div>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+              <hr class="my-4">
+              <p class="text-center text-muted mt-5 mb-0">Dont have an account? <a href="register" class="fw-bold text-body"><u>Register here</u></a></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+{% endblock body %}
+
+
+
