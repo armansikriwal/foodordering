@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block body %}
+{% load cart %}
 {% load static %}
+{% load custom %}
+
 <div class="container-fluid mt-3">
 <div class="row">
 
@@ -22,17 +25,44 @@
 <div id="product" class="col-lg-9 mx-auto">
 <div class="row mx-auto mt-4">
 {% for product in products %}
-      <div class="card mx-auto mb-4" style="width: 22rem;">
+      <div class="card mx-auto mb-4" id="{{product.id}}" style="width: 22rem;">
   <img src="{{product.image.url}}" class="card-img-top" alt="..." width="250" height="300" >
   <div class="card-body ">
     <h5 class="card-title">{{product.name}}</h5>
-    <h6 class="card-title">{{product.price}}</h6>
+    <h6 class="card-title">{{product.price|currency}}</h6>
     <p class="card-text">
     {{product.description}} <br>
     {{product.category}}
     </p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    
+    
   </div>
+  <div class="card-footer row  ">
+  {% if product|is_in_cart:request.session.cart %}
+  <div class="row no-gutters" >
+  <form action="/#{{product.id}}" method="POST" class="col-2">
+  {% csrf_token %}
+    <input hidden type="text" name="product" value="{{product.id}}">
+  <input type="submit" value =" - " class="btn btn-block btn-dark">
+  <input hidden type="text" name="remove" value="True">
+  </form>
+  <div class="text-center col "> {{product|count_cart:request.session.cart}} in Cart</div>
+  <form action="/#{{product.id}}" method="POST" class="col-2">
+  {% csrf_token %}
+    <input hidden type="text" name="product" value="{{product.id}}">
+  <input type="submit" value =" + " class="btn btn-block btn-dark">
+  </form>
+  </div>
+  
+    {% else %}
+  <form action="/#{{product.id}}" method="POST" class="btn btn-block btn-dark">
+    {% csrf_token %}
+    <input hidden type="text" name="product" value="{{product.id}}">
+    <input type="submit" class="float-center btn btn-dark btn-sm " value="add to cart">
+    </form>
+  {% endif %}
+  </div>
+  
 </div>
 
     {% endfor %}

@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate , login , logout
-from product.views import index
+
 from django.views import View
 # Create your views here.
 
@@ -46,6 +46,8 @@ class Login(View):
         password=request.POST["password"]
         user=authenticate(request,username=username,password=password)
         if user is not None:
+            request.session['username']=user.username
+
             login(request,user)
             return redirect("/")
         else:

@@ -16,7 +16,7 @@
   <!-- Container wrapper -->
   <div class="container">
     <!-- Navbar brand -->
-    <a class="navbar-brand me-2" href="https://mdbgo.com/">
+    <a class="navbar-brand me-2" href="/">
       <img
         src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
         height="16"
@@ -48,13 +48,19 @@
         </li>
       </ul>
       <!-- Left links -->
-       
+      <li class="navbar-nav my-0 my-lg-0">
+        <a class="nav-link" href="/cart">Cart</a>
+      </li>
         {% if user.is_authenticated %}
         <ul class="navbar-nav my-0 my-lg-0">
         <li class="nav-item">
           <a class="nav-link" >Hello , {{user.first_name}}</a>
         </li>
         <ul class="navbar-nav my-0 my-lg-0">
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/orders">Orders</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/logout">LogOUT</a>
         </li>
