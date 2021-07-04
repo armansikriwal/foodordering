@@ -12,6 +12,7 @@ class Index(View):
         products=None
         categorys=Category.get_all_category()
         Category_id=request.GET.get("category")
+        print(Category_id)
         if Category_id:
             products=Product.get_by_id(Category_id)
         else:
@@ -48,6 +49,6 @@ class Index(View):
 class Cart(View):
     def get(self,request):
         ids=list(request.session.get('cart').keys())
-        products=Product.get_by_id(ids)
+        products=Product.get_by_ids(ids)
         return render(request,"cart.html",{'products':products})
 

@@ -34,7 +34,7 @@ class Product(models.Model):
             return Product.objects.all()
 
     @staticmethod
-    def get_by_id(ids):
+    def get_by_ids(ids):
         return Product.objects.filter(id__in=ids)
 
 
