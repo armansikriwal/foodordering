@@ -1,7 +1,8 @@
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render,HttpResponse
-from .models import Product , Category
+from .models import Order, Product , Category
 from django.views import View
+from django.contrib.auth.models import User
 # Create your views here.
 
 class Index(View):
@@ -51,4 +52,24 @@ class Cart(View):
         ids=list(request.session.get('cart').keys())
         products=Product.get_by_ids(ids)
         return render(request,"cart.html",{'products':products})
+
+class Checkout(View):
+    def post(self,request):
+        address= request.POST.get("address")
+        phone= request.POST.get("phone")
+        customer=request.user.id
+        cart=request.session.get("cart")
+        products= Product.get_by_ids(list(cart.keys()))
+        for product in products:
+            order=Order (customer=User(id=customer) ,
+            product=product,
+            price=product.price,
+            address=address,
+            phone_num=phone ,
+            quantity=cart.get(str(product.id))
+             )
+            order.place_order()
+            request.session['cart']={}
+
+        return redirect('cart')
 

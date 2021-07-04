@@ -50,4 +50,7 @@ class Order(models.Model):
     phone_num=models.CharField(max_length=50,default="",blank=True)
     address=models.CharField(max_length=250,default="",blank=True)
 
+    def place_order(self):
+        self.save()
+
 
