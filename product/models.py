@@ -1,5 +1,8 @@
+
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.enums import TextChoices
+
 # Create your models here.
 class Category(models.Model):
     name=models.CharField(max_length=50)
@@ -21,7 +24,7 @@ class Product(models.Model):
     category=models.ForeignKey(Category,on_delete=models.CASCADE,default=1)
     description = models.CharField(max_length=250)
     image=models.ImageField( upload_to="static/products")
-
+    
     @staticmethod
     def get_all_products():
         return Product.objects.all()
@@ -49,8 +52,24 @@ class Order(models.Model):
     price=models.IntegerField()
     phone_num=models.CharField(max_length=50,default="",blank=True)
     address=models.CharField(max_length=250,default="",blank=True)
-
+    date=models.DateTimeField(auto_now_add=True)
+    status_choice=(
+        ('1', 'Pending'),
+        ('2', 'Packed'),
+        ('3', 'on the way'),
+        ('4','Delivered'),
+        ('5',"Cancelled"),
+    )
+    status=models.CharField(max_length=1,choices=status_choice)
     def place_order(self):
         self.save()
+
+    @staticmethod
+    def get_orders_of_user(user_id):
+        return Order.objects.filter(customer=user_id).order_by("-date")
+
+    
+
+
 
 

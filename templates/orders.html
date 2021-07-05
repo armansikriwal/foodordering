@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load cart %}
+{% load custom %}
+<div class="container">
+<div class="border border-rounded p-4 m-4">
+<p class="display-4 pl-4 ml-4">YOUR ORDERS</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">S.no</th>
+      <th scope="col">Image</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Date</th>
+      <th scope="col">Quantity</th>
+       <th scope="col">Total</th>
+       <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for order in orders %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td><img  class="rounded-circle" style="height:60px; width:60px"  src="{{order.product.image.url}}" alt=""></td>
+      <td>{{order.product.name}}</td>
+      <td>{{order.price|currency}}</td>
+      <td>{{order.date}}</td>
+      <td>{{order.quantity}}</td>
+      <td>{{order.quantity|multiplier:order.price|currency}}</td>
+      {% if  order.status == "4" %}
+      <td> <span class="badge bg-success">DELIVERED</span></td>
+      {% elif order.status == "3" %}
+      <td> <span class="badge bg-info text-dark">ON THE WAY</span></td>
+     {% elif order.status == "2" %}
+     <td> <span class="badge bg-primary">PACKED</span></td>
+     {% elif order.status == "5" %}
+     <td> <span class="badge bg-danger">CANCELLED</span></td>
+      {% else %}
+    <td><span class="badge bg-warning text-dark">PENDING</span></td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+{% endblock body %}
+
+

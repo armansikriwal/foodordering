@@ -19,6 +19,14 @@ def count_cart(product,cart):
             return cart.get(id)
     return 0
 
+@register.filter(name="sum_of_items")
+def sum_of_items(values):
+    sum = 0
+    for value in values:
+        sum += value
+            
+    return sum
+
 @register.filter(name="price_total")
 def price_total(product,cart):
     return product.price * count_cart(product,cart)

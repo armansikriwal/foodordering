@@ -35,8 +35,13 @@
   </tfoot>
 </table>
 <div class="m-3 p-3">
-
-  <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-info border rounded btn-lg col-lg-3" style="float: right;" type="button">Button</button>
+  {% if user.is_authenticated %}
+  <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-info border rounded btn-lg col-lg-3" style="float: right;" type="button">
+  Checkout</button>
+  {% else %}
+  <a class="btn btn-outline-info border rounded btn-lg col-lg-3" href="login" style="float: right;"  >LOGIN TO CONTINUE</a>
+  {% endif %}
+  
 </div>
 </div>
 </div>

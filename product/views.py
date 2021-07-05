@@ -3,6 +3,10 @@ from django.shortcuts import redirect, render,HttpResponse
 from .models import Order, Product , Category
 from django.views import View
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
+
 # Create your views here.
 
 class Index(View):
@@ -72,4 +76,11 @@ class Checkout(View):
             request.session['cart']={}
 
         return redirect('cart')
+
+class OrderView(View):
+    def get(self,request):
+        customer=request.user.id
+        orders=Order.get_orders_of_user(customer)
+        #print(orders)
+        return render(request,"orders.html",{'orders':orders})
 

@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate , login , logout
@@ -38,7 +38,9 @@ class Signup(View):
         
 
 class Login(View):
+    return_url= None
     def get(self,request):
+        Login.return_url=request.GET.get('return_url')
         return render(request,"login.html")
     
     def post(self,request):
@@ -47,9 +49,13 @@ class Login(View):
         user=authenticate(request,username=username,password=password)
         if user is not None:
             request.session['username']=user.username
-
-            login(request,user)
-            return redirect("/")
+            if Login.return_url :
+                login(request,user)
+                return HttpResponseRedirect(Login.return_url)
+            else:
+                Login.return_url=None
+                login(request,user)
+                return redirect("/")
         else:
             messages.info(request,"enter valid details")
             return redirect("login")

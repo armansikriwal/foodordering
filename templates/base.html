@@ -12,6 +12,7 @@
   </head>
  <!-- Navbar -->
 <!-- Navbar -->
+{% load cart %}
 <nav class="navbar navbar-expand-lg " style="background-color: #e3f2fd;">
   <!-- Container wrapper -->
   <div class="container">
@@ -49,6 +50,11 @@
       </ul>
       <!-- Left links -->
       <li class="navbar-nav my-0 my-lg-0">
+        <a class="nav-link" href="/cart">
+          <span class="badge badge-pill bg-danger">{{request.session.cart.values|sum_of_items}}</span>
+          <span><i class="fas fa-shopping-cart"></i></span>
+        </a>
+        
         <a class="nav-link" href="/cart">Cart</a>
       </li>
         {% if user.is_authenticated %}
