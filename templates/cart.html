@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
+{% block title %} Cart{% endblock title %} 
 {% block body %}
 {% load cart %}
 {% load custom %}
-<div class="container">
+
+<div class="container-fluid " style="padding: 0">
+  <div class="banner img-responsive"
+      style="background-image: url('https://www.cnet.com/a/img/EpvDk3LwTQ6YsTVx081P78y7ZZA=/1200x675/2018/10/10/30c923c8-4e64-449d-b8ef-9a78b2011ae5/gettyimages-769800477.jpg'); ">
+
+<div class="container-fluid">
 <div class="border border-rounded p-4 m-4">
 <p class="display-4 pl-4 ml-4">CART</p>
 <table class="table">
@@ -23,7 +29,25 @@
       <td><img  class="rounded-circle" style="height:60px; width:60px"  src="{{product.image.url}}" alt=""></td>
       <td>{{product.name}}</td>
       <td>{{product.price|currency}}</td>
-      <td>{{product|count_cart:request.session.cart}}</td>
+      <td>
+      <div class="row">
+       <form action="cart" method="POST" class="col-2">
+  {% csrf_token %}
+    <input hidden type="text" name="product" value="{{product.id}}">
+  <input type="submit" value =" - " class="btn btn-block btn-dark">
+  <input hidden type="text" name="remove" value="True">
+  </form>
+  
+      {{product|count_cart:request.session.cart}}
+    
+      <form action="cart" method="POST" class="col-2">
+  {% csrf_token %}
+    <input hidden type="text" name="product" value="{{product.id}}">
+  <input type="submit" value =" + " class="btn btn-block btn-dark">
+  </form>
+  </div>
+  </div>
+      </td>
       <td>{{product|price_total:request.session.cart|currency}}</td>
     </tr>
     {% endfor %}
@@ -46,9 +70,13 @@
 </div>
 </div>
 </div>
+</div>
+
+
 <!--modal-->
 
 <!-- Modal -->
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

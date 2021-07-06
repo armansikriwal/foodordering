@@ -17,7 +17,7 @@ class Index(View):
         products=None
         categorys=Category.get_all_category()
         Category_id=request.GET.get("category")
-        print(Category_id)
+        #print(Category_id)
         if Category_id:
             products=Product.get_by_id(Category_id)
         else:
@@ -48,7 +48,7 @@ class Index(View):
             cart[product]=1
         
         request.session['cart']=cart
-        print(request.session['cart'])
+        #print(request.session['cart'])
         return redirect("/")
 
 class Cart(View):
@@ -56,6 +56,31 @@ class Cart(View):
         ids=list(request.session.get('cart').keys())
         products=Product.get_by_ids(ids)
         return render(request,"cart.html",{'products':products})
+
+    def post(self,request):
+        product=request.POST.get("product")
+        remove=request.POST.get("remove")
+        
+        cart=request.session.get('cart')
+        if cart :
+            quantity=cart.get(product)
+            if quantity:
+                if remove:
+                    if quantity<=1:
+                        cart.pop(product)
+                    else:
+                        cart[product]=quantity -1
+                else:
+                    cart[product]=quantity +1
+            else:
+                cart[product]=1
+        else:
+            cart={}
+            cart[product]=1
+        
+        request.session['cart']=cart
+        #print(request.session['cart'])
+        return redirect("cart")
 
 class Checkout(View):
     def post(self,request):
