@@ -1,19 +1,48 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock title %} 
-{% block body %}
 {% load cart %}
 {% load static %}
 {% load custom %}
+{% block banner_slider %}
+<!--Banner Slider-->
+ <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static '/banner/samosa.jpg' %}" class="d-block w-100" alt="... " height="550px"  > 
+    </div>
+    <div class="carousel-item">
+      <img src="{% static '/banner/naan.jpg' %}" class="d-block w-100" alt="..."height="550px" >
+    </div>
+    <div class="carousel-item">
+      <img src="{% static '/banner/gril.jpg' %}" class="d-block w-100" alt="..." height="550px">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static '/banner/thali.jpg' %}" class="d-block w-100" alt="..." height="550px">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </a>
+</div>
+<!-- End Banner Slider -->
+{% endblock banner_slider %}
+{% block body %}
+
 
 
 <div class="container-fluid">
 <div class="row" style="background-image: url('https://wallpaperaccess.com/full/3692584.jpg ');">
 <!--filter-->
-<div class="col-lg-3 mx-0 mt-4 mt-lg-4">
-  <a class="list-group-item list-group-item-action " href="/">All Products</a>
+<div class="col-lg-3 mx-0 mt-4 mt-lg-4" >
+  <a class="list-group-item list-group-item-action border-3 border-danger text-uppercase " href="/" >All Products</a>
   {% for category in categorys %}
   <div class="list-group">
-    <a class="list-group-item list-group-item-action " href="/?category={{category.id}}">{{category.name}}</a>
+    <a class="list-group-item list-group-item-action border-3 border-danger text-uppercase" href="/?category={{category.id}}">{{category.name}}</a>
     
   </div>
   {% endfor %}
@@ -25,21 +54,23 @@
 <div id="product" class="col-lg-9 mx-auto">
 <div class="row mx-auto mt-4 ">
 {% for product in products %}
-  <div class="card mx-auto mb-4 body bg-info mb-3 border-dark mb-3" id="{{product.id}}" style="width: 22rem;">
+  <div class="card mx-auto mb-4 body bg-transparent  mb-3 border-5 border-primary   mb-3" id="{{product.id}}" style="width: 22rem;">
   <img src="{{product.image.url}}" class="card-img-top" alt="..." width="250" height="300" >
-  <div class="card-body ">
-    <h5 class="card-title">{{product.name}}</h5>
+  <div class="card-body no-gutter  "style="background-color: #9a9fa9">
+    <h5 class="card-title text-lg-center text-uppercase">{{product.name}}</h5>
     <h6 class="card-title">{{product.price|currency}}</h6>
     <p class="card-text">
     {{product.description}} <br>
-    {{product.category}}
+        {{product.category}}
+    
+    
     </p>
     
     
   </div>
-  <div class="card-footer row  ">
+  <div class="card-footer row bg-primary ">
   {% if product|is_in_cart:request.session.cart %}
-  <div class="row no-gutters" >
+  <div class="row no-gutters " >
   <form action="/#{{product.id}}" method="POST" class="col-2">
   {% csrf_token %}
     <input hidden type="text" name="product" value="{{product.id}}">
