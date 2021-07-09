@@ -100,7 +100,7 @@ class Checkout(View):
             order.place_order()
             request.session['cart']={}
 
-        return redirect('cart')
+        return redirect('orders')
 
 class OrderView(View):
     def get(self,request):

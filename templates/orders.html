@@ -3,10 +3,12 @@
 {% block body %}
 {% load cart %}
 {% load custom %}
-<div class="container">
-<div class="border border-rounded p-4 m-4">
-<p class="display-4 pl-4 ml-4">YOUR ORDERS</p>
-<table class="table">
+{% load static %}
+
+<div class="container" style=" background-image: url('{% static '/orders.jpg' %}')">
+<div class="border border-rounded p-4 m-4 ">
+<p class="display-4 pl-4 ml-4 text-center text-info">YOUR ORDERS</p>
+<table class="table text-warning text-uppercase">
   <thead>
     <tr>
       <th scope="col">S.no</th>
@@ -23,7 +25,7 @@
   {% for order in orders %}
     <tr>
       <th scope="row">{{forloop.counter}}</th>
-      <td><img  class="rounded-circle" style="height:60px; width:60px"  src="{{order.product.image.url}}" alt=""></td>
+      <td><img  class="rounded-circle bg-primary" style="height:60px; width:60px"  src="{{order.product.image.url}}" alt=""></td>
       <td>{{order.product.name}}</td>
       <td>{{order.price|currency}}</td>
       <td>{{order.date}}</td>

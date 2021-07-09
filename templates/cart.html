@@ -3,12 +3,13 @@
 {% block body %}
 {% load cart %}
 {% load custom %}
+{% load static %}
 
 <div class="container-fluid " style="padding: 0">
-<div class="container-fluid" style="background-color: #5BC8AC;">
+<div class="container-fluid" style=" background-image: url('{% static '/cart1.jpg' %}')">
 <div class="border border-rounded p-4 m-4">
-<p class="display-4 pl-4 ml-4">CART</p>
-<table class="table">
+<p class="display-4 pl-4 ml-4 text-center">CART</p>
+<table class="table text-warning bg-success text-uppercase">
   <thead>
     <tr>
       <th scope="col">S.no</th>
@@ -27,7 +28,7 @@
       <td>{{product.name}}</td>
       <td>{{product.price|currency}}</td>
       <td>
-      <div class="row">
+      <div class="row text-warning ">
        <form action="cart" method="POST" class="col-2">
   {% csrf_token %}
     <input hidden type="text" name="product" value="{{product.id}}">
@@ -35,7 +36,7 @@
   <input hidden type="text" name="remove" value="True">
   </form>
   
-      {{product|count_cart:request.session.cart}}
+    {{product|count_cart:request.session.cart}}
     
       <form action="cart" method="POST" class="col-2">
   {% csrf_token %}
