@@ -2,21 +2,20 @@
 {% block title %}Login{% endblock title %} 
 {% block body %}
 {% load static %}
-{% if message %}
 
-<div class="alert alert-warning alert-dismissible fade show  text-center" role="alert">
+{% if messages %}
+
+<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
   <strong> {% for message in messages %}
   {{message}}
   {% endfor %}</strong> 
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 {% endif %}
 
   
-<div class="container-fluid  mx-auto" style="padding: 0">
-  <div class="img-fluid mx-auto" alt="Responsive image"
+<div class="container-fluid  mx-auto" style="padding: 10">
+  <div class="img-fluid mx-auto " alt="Responsive image"
       style=" background-image: url('{% static '/login.jpg' %}')">
   <div class="container ">
     <div class="row body ">
